@@ -62,6 +62,13 @@ def Ejer5():
     plt.xlabel('tiempo')
     plt.ylabel('senial')
     plt.show()
+    '''
+    CONCLUCION: en la grafica podemos observar una senial con una frecuencia de 1Hz
+    esto se debe a la baja frecuencia de muestreo, que coincidentemente en fm=129,
+    muesta la senial antes descripta.
+    para solucionarlo, deberiamos tener una fm al menos del doble de la fs 
+    (para complir con el teorema del muestreo)
+    '''
 
 def Ejer6():
     t,y  = senoidal(0,1,10)
