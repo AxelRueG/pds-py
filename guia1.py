@@ -28,11 +28,19 @@ def Ejer2():
 
 def Ejer3():
     # 0.01(s)/8(segmentos) -> 10*10*8 -> fm = 800Hz
+
+    # 0.05s es el tiempo en que ocurre un periodo
     # Ts = 0.05s  -> fs = 1/Ts = 20Hz
+
     # phi' = 0.01-3*(0.01/8) = 0.00625
+
     # 2pi ~ 0.05 -> 0.00625 ~ -2*pi*0.00625/0.05
+
     # phi = -2*pi*0.00625/0.05
+
     # A = 3
+
+    # t0 tf fm fs phi
     t,y = senoidal(0,0.1,800,20,-2*np.pi*0.00625/0.05)
     plt.stem(t,3*y)
     plt.show()
@@ -63,7 +71,7 @@ def Ejer5():
     plt.ylabel('senial')
     plt.show()
     '''
-    CONCLUCION: en la grafica podemos observar una senial con una frecuencia de 1Hz
+    CONCLUSION: en la grafica podemos observar una senial con una frecuencia de 1Hz
     esto se debe a la baja frecuencia de muestreo, que coincidentemente en fm=129,
     muesta la senial antes descripta.
     para solucionarlo, deberiamos tener una fm al menos del doble de la fs 
@@ -72,7 +80,7 @@ def Ejer5():
 
 def Ejer6():
     t,y  = senoidal(0,1,10)
-    ti,yi = interpolacion(t,y,40)
+    ti,yi = interpolacion(t,y,40,2)
     fig, axs = plt.subplots(2,1)
     axs[0].stem(t,y)
     axs[0].set_xlim(0,1)
