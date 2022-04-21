@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from Signals import cuadrada, senoidal, sinc
 from SignalsOperations import cuantizador, inversion, rectificacion
-from interpolantes import interpolacion
+from interpolantes import escalon, interpolacion, lineal
 
 def Ejer1 ():
     t1,y1 = senoidal(0,1,50)
@@ -80,7 +80,8 @@ def Ejer5():
 
 def Ejer6():
     t,y  = senoidal(0,1,10)
-    ti,yi = interpolacion(t,y,40,2)
+    # func = [ sinc (default), lineal, escalon]
+    ti,yi = interpolacion(t,y,40, func = escalon)
     fig, axs = plt.subplots(2,1)
     axs[0].stem(t,y)
     axs[0].set_xlim(0,1)
