@@ -1,8 +1,10 @@
 import numpy as np
 from Signals import senoidal
 
-import time
-
+# ------------------------------------------------------------------------------
+# recive una senial de frecuencia (fs) a la que le alplicamos un desplazamiento
+# fs: frecuencia de la senial
+# data: senial a comparar
 def senial_desfasada(fs,data):
   # rango de angulos de fase
   phis = np.arange(0, 2*np.pi, 0.1)
@@ -14,6 +16,10 @@ def senial_desfasada(fs,data):
     if p>parecido: parecido=p    # nos quedamos con el maximo parecido
   return parecido
 
+# ------------------------------------------------------------------------------
+# busca la senial de la frecuencia fs mas parecida a la de data
+# fs: vector de frecuencias
+# data: senial a comparar
 def mas_parecido(fs,data):
   maxfil = -1000
   indice = -1
@@ -27,16 +33,7 @@ def mas_parecido(fs,data):
 
   return indice
 
-def calcular_frecuencias(data):
-  filas = [697, 770, 852, 941]
-  columnas = [1209, 1336, 1477]
-
-  fil = mas_parecido(filas,data)
-  col = mas_parecido(columnas,data) 
-
-  return fil, col
-
-
+# ------------------------------------------------------------------------------
 def ejer_5():
   data = np.loadtxt('/home/axel/Documents/fich/PDS/src/datasets/te.txt')
 
@@ -54,13 +51,14 @@ def ejer_5():
              ['7','8','9'],
              ['*','0','#']]
 
-  ini = time.time()
+  # frecuencias del teclado
+  filas = [697, 770, 852, 941]
+  columnas = [1209, 1336, 1477]
   
   numero_discado = ''
   for numero in intervalos_de_numero:
-    fil,col = calcular_frecuencias(data[numero[0]:numero[1]])
+    fil = mas_parecido(filas,data[numero[0]:numero[1]])
+    col = mas_parecido(columnas,data[numero[0]:numero[1]]) 
     numero_discado += teclado[fil][col]
-  print(f'nuemero discado: {numero_discado}')
   
-  fin = time.time()
-  print(f'tiempo: {fin-ini}seg')
+  print(f'nuemero discado: {numero_discado}')
