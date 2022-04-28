@@ -1,23 +1,25 @@
 import numpy as np
-import matplotlib.pyplot as plt
 from Signals import senoidal
 
 import time
 
-def mas_parecido(fs,data):
+def senial_desfasada(fs,data):
   # rango de angulos de fase
   phis = np.arange(0, 2*np.pi, 0.1)
+  parecido = -1000
+  # comparamos con una frecuencia desfasada
+  for i in range(0,phis.size):
+    # medimos el parecido
+    p = np.dot( senoidal(0,1,data.size,fs,phis[i])[1], data )
+    if p>parecido: parecido=p    # nos quedamos con el maximo parecido
+  return parecido
 
+def mas_parecido(fs,data):
   maxfil = -1000
   indice = -1
   # vamos recorreindo las frecuencias de la fila o columna
   for key in range(0,len(fs)):
-    parecido = -1000
-    # comparamos con una frecuencia desfasada
-    for i in range(0,phis.size):
-      # medimos el parecido
-      p = np.dot( senoidal(0,1,data.size,fs[key],phis[i])[1], data )
-      if p>parecido: parecido=p    # nos quedamos con el maximo parecido
+    parecido = senial_desfasada(fs[key],data)
     # comparamos cual frecuencia se parece mas a la de data
     if parecido>maxfil: 
       maxfil=parecido
@@ -62,6 +64,3 @@ def ejer_5():
   
   fin = time.time()
   print(f'tiempo: {fin-ini}seg')
-
-  # plt.plot(data)
-  # plt.show()
