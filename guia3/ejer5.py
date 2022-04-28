@@ -2,38 +2,35 @@ import numpy as np
 import matplotlib.pyplot as plt
 from Signals import senoidal
 
-def parecido(fs,data):
+import time
+
+def mas_parecido(fs,data):
   # rango de angulos de fase
   phis = np.arange(0, 2*np.pi, 0.1)
-  parecido = -1000
-  
-  for i in range(0,phis.size):
-    # medimos el parecido con el producto interno
-    p = np.dot( senoidal(0,1,data.size,fs,phis[i])[1], data )
-    if p>parecido: parecido=p
 
-  return parecido
+  maxfil = -1000
+  indice = -1
+  # vamos recorreindo las frecuencias de la fila o columna
+  for key in range(0,len(fs)):
+    parecido = -1000
+    # comparamos con una frecuencia desfasada
+    for i in range(0,phis.size):
+      # medimos el parecido
+      p = np.dot( senoidal(0,1,data.size,fs[key],phis[i])[1], data )
+      if p>parecido: parecido=p    # nos quedamos con el maximo parecido
+    # comparamos cual frecuencia se parece mas a la de data
+    if parecido>maxfil: 
+      maxfil=parecido
+      indice=key
+
+  return indice
 
 def calcular_frecuencias(data):
   filas = [697, 770, 852, 941]
   columnas = [1209, 1336, 1477]
 
-  # buscamos la fila
-  maxfil = -1000
-  fil = -1
-  for i in range(0,len(filas)):
-    maxval = parecido(filas[i],data)
-    if maxval>maxfil: 
-      maxfil=maxval
-      fil=i
-  # buscamos la columna
-  maxcol = -1000
-  col = -1
-  for i in range(0,len(columnas)):
-    maxval = parecido(columnas[i],data)
-    if maxval>maxcol: 
-      maxcol=maxval
-      col=i
+  fil = mas_parecido(filas,data)
+  col = mas_parecido(columnas,data) 
 
   return fil, col
 
@@ -55,12 +52,16 @@ def ejer_5():
              ['7','8','9'],
              ['*','0','#']]
 
+  ini = time.time()
+  
   numero_discado = ''
   for numero in intervalos_de_numero:
     fil,col = calcular_frecuencias(data[numero[0]:numero[1]])
     numero_discado += teclado[fil][col]
   print(f'nuemero discado: {numero_discado}')
   
+  fin = time.time()
+  print(f'tiempo: {fin-ini}seg')
 
   # plt.plot(data)
   # plt.show()
