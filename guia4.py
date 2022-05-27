@@ -1,7 +1,15 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from Signals import senoidal
+from Signals import cuadrada, senoidal
 
+epsilon = 10**-9    # para el error numerico
+
+def my_fft(s):
+  N = s.shape[0]
+  S = np.fft.fft(s)
+  # pasamos la parte de las frecuencias negativas adelante
+  S = np.concatenate((S[int((N)/2):], S[:int((N)/2)]))
+  return S
 
 '''
 NOTAS:
@@ -20,14 +28,11 @@ def ejer1():
   # s = senoidal(0,tf,fm,f1)[1]+(4*senoidal(0,tf,fm,f2)[1])+4
   
   N = s.shape[0]
-  S = np.fft.fft(s)
-  # pasamos la parte de las frecuencias negativas adelante
-  S = np.concatenate((S[int((N)/2):], S[:int((N)/2)]))
+  S = my_fft(s)
   df = fm/2
   f = np.arange(-df,df,fm/N)  # rango de la transformada de fourier
 
   # condicion de perceval
-  epsilon = 10**-6    # para el error numerico
   perseval1 = sum(s**2)
   perseval2 = (1/N)*sum(abs(S)**2)
   if abs(perseval1-perseval2) < epsilon:
@@ -41,5 +46,41 @@ def ejer1():
   ax[1].stem(f,abs(S))
   plt.show()
 
+def ejer2():
+  # definimos el producto interno
+  producto_interno = lambda a,b: np.dot(a,np.conj(b)) 
+
+  # datos de entrada
+  t0 = 0
+  t1 = 1
+  fm = 100
+  # seniales 
+  sn = ['a','b','c']
+  s = np.array([senoidal(t0,t1,fm,2)[1],cuadrada(t0,t1,fm,2)[1],senoidal(t0,t1,fm,4)[1]])
+  # sn = ['a','c']
+  # s = np.array([senoidal(t0,t1,fm,2)[1],senoidal(t0,t1,fm,3.5)[1]])
+
+  p = 0
+  while p<len(s):
+    q = (p+1)%len(s)
+    print(f'-- comparativa senial {sn[p]} y {sn[q]} -----------------------')
+    ortogonalidad = producto_interno(s[p],s[q])
+    if (ortogonalidad<epsilon):
+      print('son ortogonales en el dominio temporal')
+    else:
+      print('no son ortogonales en el dominio temporal')
+
+    S1 = my_fft(s[p])
+    S2 = my_fft(s[q])
+    ortogonalidad_trasnformada = producto_interno(S1,S2)
+    if (ortogonalidad_trasnformada<epsilon):
+      print('son ortogonales en el dominio frecuencial')
+    else:
+      print('no son ortogonales en el dominio frecuencial')
+
+    p+=1
+
+
 if __name__=="__main__":
-  ejer1()
+  # ejer1()
+  ejer2()
