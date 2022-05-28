@@ -21,10 +21,10 @@ def ejer1(ti=0,tf=1,f1=10,f2=20,fm=100):
   df = fm/2
   f = np.arange(-df,df,fm/N)  # rango de la transformada de fourier
 
-  # condicion de perceval
-  perseval1 = sum(s**2)
-  perseval2 = (1/N)*sum(abs(S)**2)
-  if abs(perseval1-perseval2) < epsilon:
+  # condicion de parceval
+  parseval1 = sum(s**2)
+  parseval2 = (1/N)*sum(abs(S)**2)
+  if abs(parseval1-parseval2) < epsilon:
     print('son iguales')
   else:
     print('son distintos')
