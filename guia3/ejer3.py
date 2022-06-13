@@ -80,7 +80,7 @@ def ejer_3():
   ax.plot(t,aproximacion2,'r', label='aproximacion de 6 polinomios')
   ax.legend()
 
-  ## iniciso b
-  # matriz_de_errores(15,y,l)
+  # iniciso b
+  matriz_de_errores(15,y,l)
 
   plt.show()

@@ -13,11 +13,9 @@ def ejer_6():
   fa_fs = 349.23
   for i in range(0,8):
     p = senial_desfasada(fa_fs,data[tono_longitud*i:tono_longitud*(i+1)])
-    print(p)
+    # print(p)
     if parecido<p: 
       parecido = p
       position = i
   
   print(f'el tono FA es el numero {position} en el audio')
-  
-    

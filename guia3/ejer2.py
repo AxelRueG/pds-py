@@ -23,6 +23,8 @@ def ejer_2(variacion='ambos'):
     ax.stem(t,y)
     ax.set_xlim(0,1)
     ax.set_ylim(-1.5,1.5)
+    ax.set_xlabel('tiempo [s]')
+    ax.set_ylabel('x[n]')
     plt.title(f'parecido <u,v>: {round(producto_interno(ya,y),2)}')
     plt.show()
 
