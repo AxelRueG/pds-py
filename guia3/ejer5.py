@@ -1,5 +1,6 @@
 import numpy as np
 from Signals import senoidal
+from os.path import abspath
 
 # ------------------------------------------------------------------------------
 # recive una senial de frecuencia (fs) a la que le alplicamos un desplazamiento
@@ -35,7 +36,7 @@ def mas_parecido(fs,data):
 
 # ------------------------------------------------------------------------------
 def ejer_5():
-  data = np.loadtxt('/home/axel/Documents/fich/PDS/src/datasets/te.txt')
+  data = np.loadtxt(abspath('./datasets/te.txt'))
 
   # Intervalos de cada numero discado
   intervalos_de_numero = [[ 17200,  21800 ],

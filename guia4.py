@@ -10,5 +10,5 @@ if __name__=="__main__":
   # ejer2(inciso=0)
   # ejer3(fs=10,fm=100,despazamiento=10)
   # ejer4()
-  # ejer5()
+  # ejer5(fm=50,fs=27)
   ejer6()

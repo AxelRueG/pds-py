@@ -2,9 +2,10 @@ import numpy as np
 from scipy.io import wavfile
 
 from guia3.ejer5 import senial_desfasada
+from os.path import abspath
 
 def ejer_6():
-  samplerate, data = wavfile.read('/home/axel/Documents/fich/PDS/src/datasets/escala.wav')
+  samplerate, data = wavfile.read(abspath('./datasets/escala.wav'))
   tono_longitud = round(data.size/8)
 
   position = -1

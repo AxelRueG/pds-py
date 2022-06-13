@@ -16,13 +16,22 @@ def ejer3(fs=10,fm=100,despazamiento=10):
   S = np.concatenate((S[int((N)/2):], S[:int((N)/2)]))
   S_desfasado = np.concatenate((S_desfasado[int((N)/2):], S_desfasado[:int((N)/2)]))
 
-  fig,ax =plt.subplots(2,2)
+  # -- GRAFICAS ----------------------------------------------------------------
+  fig,ax =plt.subplots(2,2,constrained_layout=True)
   ax[0][0].stem(t,s)
   ax[0][0].set_title('senoidal')
+  ax[0][0].set_xlabel('tiempo [s]')
+  ax[0][0].set_ylabel('x[n]')
   ax[1][0].stem(f,abs(S))
   ax[1][0].set_title('senoidal transformada')
+  ax[1][0].set_xlabel('frecuencia [Hz]')
+  ax[1][0].set_ylabel('|X[k]|')
   ax[0][1].stem(f,abs(S_desfasado))
   ax[0][1].set_title('senoidal transformada desplazada')
+  ax[0][1].set_xlabel('frecuencia [Hz]')
+  ax[0][1].set_ylabel('|X[k]|')
   ax[1][1].stem(t,np.real(s_desfasado)) # s_desfasado posee parte imaginaria
   ax[1][1].set_title('senoidal despazada')
+  ax[1][1].set_xlabel('tiempo [s]')
+  ax[1][1].set_ylabel('x[n]')
   plt.show()
