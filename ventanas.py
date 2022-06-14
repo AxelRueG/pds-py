@@ -8,9 +8,9 @@ def hanning(N):
   w = 0.5-0.5*np.cos(2*np.pi*n/N)
   return w
 
-def Hamming(N):
+def hamming(N):
   n = np.arange(N)
-  w = (27/50)-((23/25)*np.cos(2*np.pi*n/N))
+  w = (27/50)-((23/50)*np.cos(2*np.pi*n/N))
   return w
 
 def bartlett(N):
@@ -20,7 +20,7 @@ def bartlett(N):
   w[case2] = 2-2*n[case2]/N
   return w
 
-def balckman(N):
+def blackman(N):
   n = np.arange(N)
-  w = (21/50)-0.5*np.cos*(2*np.pi*n/N)+(2/25)*np.cos*(4*np.pi*n/N)
-  return n
+  w = (21/50) - ((1/2)*np.cos(2*np.pi*n/N)) + ((2/25)*np.cos(4*np.pi*n/N))
+  return w
