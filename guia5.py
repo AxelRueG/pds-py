@@ -1,7 +1,8 @@
 from matplotlib import pyplot as plt
 import numpy as np
 
-from sistemas import delta_dirac
+from sistemas import respuesta_al_impulso
+from zplane import zplane
 
 '''
 -- EJERCICIO 1 -----------------------------------------------------------------
@@ -43,7 +44,6 @@ def ejer_2():
   fun_a = lambda z: 1/(1-0.5*(z**-1)+0.25*(z**-2))
   fun_b = lambda z: (z**-1)/(1-(z**-1)-(z**-2))
   fun_c = lambda z: 7/(1-2*(z**-1)+6*(z**-2))
-
   def fun_d(z):
     zd = np.zeros(z.shape[0])
     for k in range(8): zd = zd+((2**-k)*(z**-k))
@@ -74,5 +74,35 @@ def ejer_2():
   ax[1].set_ylabel('h[n]')
   plt.show()
 
+def ejer_3():
+  '''
+  tenemos:
+  H(z) = (1-2z^-1+2z^-2-z^-3)/((1-z^-1)(1-0.5z^-1)(1-0.2z^-1))
+  Y(z)/X(z) = (1-2z^-1+2z^-2-z^-3)/((1-z^-1)(1-0.5z^-1)(1-0.2z^-1))
+  Y(z)((1-z^-1)(1-0.5z^-1)(1-0.2z^-1)) = X(z)(1-2z^-1+2z^-2-z^-3)
+  Y(z)(1-1.7(z^-1)+0.8(z^-2)-0.1(z^-3)) = X(z)(1-2z^-1+2z^-2-z^-3)
+  Y(z)-1.7Y(z)(z^-1)+0.8Y(z)(z^-2)-0.1Y(z)(z^-3) = X(z)-2X(z)(z^-1)+2X(z)(z^-2)-X(z)(z^-3)
+  y[n]-1.7y[n-1]+0.8y[n-2]-0.1y[n-3] = x[n]-2x[n-1]+2x[n-2]-x[n-3]
+  '''
+  h = respuesta_al_impulso(100,
+      np.array([1,-2,2,-1]),
+      np.array([1.7,-0.8,0.1]))
+      
+  '''
+  NOTA: segun el analicis de polos y ceros, podemos determinar que el sistema es estable,
+  como podemos apreciar en la grafica de la respusta al impulso, que es finita.
+  '''
+  zplane(np.array([1,-2,2,-1]),np.array([1,-1.7,0.8,-0.1]))
+
+  # GRAFICAS 
+  fig,ax = plt.subplots()
+  ax.stem(h)
+  ax.set_title('respuesta al impulso')
+  ax.set_xlabel('n')
+  ax.set_ylabel('h[n]')
+
+  plt.show()
+
 if __name__=='__main__':
-  ejer_2()
+  # ejer_2()
+  ejer_3()

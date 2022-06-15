@@ -25,7 +25,7 @@ def ejer1_sistemas ():
 
 # EJERCICIO 4 ------------------------------------------------------------------
 def ejer4_sistemas():
-  y1 = respuesta_al_impulso(25, np.array([1]), np.array([-1]))
+  y1 = respuesta_al_impulso(25, np.array([1]), np.array([0,1]))
   y2 = respuesta_al_impulso(25, np.array([1,0.5]), np.array([0]))
   y3 = respuesta_al_impulso(25, np.array([1]), np.array([0.5,-0.25]))
 
@@ -77,8 +77,8 @@ def ejer3_convolucion(a,N):
 ## == MAIN =====================================================================
 if __name__ == '__main__':  
 # SISTEMAS -------------------------------------------------------------------
-  ejer1_sistemas()
-  # ejer4_sistemas()
+  # ejer1_sistemas()
+  ejer4_sistemas()
 # CONVOLUCION ----------------------------------------------------------------
   # ejer1y2_convolucion(
   #   np.array([0.5,1,1,0.5,0,-0.5,-1,-1,-0.5,0]),
