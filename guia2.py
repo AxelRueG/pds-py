@@ -1,9 +1,9 @@
 import numpy as np 
 import matplotlib.pyplot as plt
-from sympy import construct_domain
 from Signals import cuadrada, senoidal
 from convolucion import convolucion_circular, convolucion_lineal
 from sistemas import respuesta_al_impulso, delta_dirac
+import scipy.signal as sgn
 
 # EJERCICIO 1 - item 1 ---------------------------------------------------------
 def ejer1_sistemas ():
@@ -43,13 +43,26 @@ def ejer4_sistemas():
 # convolucion lineal y circular comparadas
 def ejer1y2_convolucion(x,h):
   yl = convolucion_lineal(x,h)
+  y_conv = np.convolve(x,h)
   yc = convolucion_circular(x,h)
+
+  ## USANDO FILTER
+  ## completamos al de menor longitud con ceros
+  cant = abs(x.size-h.size)
+  x1 = x.copy() if (x.size > h.size) else np.concatenate((x,np.zeros(cant)))
+  h1 = h.copy() if (x.size < h.size) else np.concatenate((h,np.zeros(cant)))
+  A = delta_dirac(x1.size)
+  y_fil = sgn.lfilter(h1,A,x1)
   
-  fig, ax = plt.subplots(2,constrained_layout=True)
-  ax[0].stem(yl)
-  ax[0].set_title('convolucion lineal')
-  ax[1].stem(yc)
-  ax[1].set_title('convolucion circular')
+  fig, ax = plt.subplots(2,2,constrained_layout=True)
+  ax[0][0].stem(yl)
+  ax[0][0].set_title('convolucion lineal')
+  ax[0][1].stem(y_conv)
+  ax[0][1].set_title('convolucion de python')
+  ax[1][0].stem(yc)
+  ax[1][0].set_title('convolucion circular')
+  ax[1][1].stem(y_fil)
+  ax[1][1].set_title('convolucion por filter')
   plt.show()
 
 # EJERCICIO 3 ------------------------------------------------------------------
@@ -78,11 +91,11 @@ def ejer3_convolucion(a,N):
 if __name__ == '__main__':  
 # SISTEMAS -------------------------------------------------------------------
   # ejer1_sistemas()
-  ejer4_sistemas()
+  # ejer4_sistemas()
 # CONVOLUCION ----------------------------------------------------------------
-  # ejer1y2_convolucion(
-  #   np.array([0.5,1,1,0.5,0,-0.5,-1,-1,-0.5,0]),
-  #   np.array([1,0.75,0.5,0.25,0.25,0.1,0.1])
-  # )
+  ejer1y2_convolucion(
+    np.array([0.5,1,1,0.5,0,-0.5,-1,-1,-0.5,0]),
+    np.array([1,0.75,0.5,0.25,0.25,0.1,0.1])
+  )
 
   # ejer3_convolucion(0.8,5)
