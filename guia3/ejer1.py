@@ -2,6 +2,8 @@ import numpy as np
 import scipy.linalg as scl
 import matplotlib.pyplot as plt
 
+from Signals import senoidal
+
 # ------------------------------------------------------------------------------
 def signal_info(x):
   pm = sum(x**2)/x.size
@@ -16,7 +18,9 @@ def signal_info(x):
 
 def ejer_1 (n):
   y = (2*np.random.rand(n))-1      # senial aleatorea de [-1:1] 
+  # y1 = senoidal(0,1,n,2)      # senial aleatorea de [-1:1] 
   signal_info(y)
+  # signal_info(y1)
   plt.stem(y)
   plt.show()
 

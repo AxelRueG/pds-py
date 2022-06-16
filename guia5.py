@@ -137,6 +137,6 @@ def ejer_4():
   plt.show()
 
 if __name__=='__main__':
-  # ejer_2(fun_item_a)
+  ejer_2(fun_item_a)
   # ejer_3()
-  ejer_4()
+  # ejer_4()

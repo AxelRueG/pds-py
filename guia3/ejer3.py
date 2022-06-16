@@ -70,6 +70,7 @@ def ejer_3():
 
   print(f'error cuadratico con una aproximacion de 4: {np.linalg.norm(y-aproximacion1)**2}')
   print(f'error cuadratico con una aproximacion de 6: {np.linalg.norm(y-aproximacion2)**2}')
+  print(a)
 
   img, ax = plt.subplots()
   ax.set_title('comparacion de apoximaciones')

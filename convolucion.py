@@ -26,10 +26,11 @@ def convolucion_circular(xn,hn):
   # entrada x[n] ciclica
   x = xn.copy()
   while (x.size < N):
-    x = np.hstack(( x, x[0:N-x.size] ))
+    x = np.concatenate(( x, x[0:N-x.size] ))
 
-  # respuesta al impulso completada con ceros
-  h = np.hstack((hn, np.zeros(N-hn.size) ))
+  h = hn.copy()
+  while (h.size < N):
+    h = np.concatenate(( h, h[0:N-h.size] ))
 
   y = np.zeros(N)  
   # convolucion

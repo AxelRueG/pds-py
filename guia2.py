@@ -73,17 +73,20 @@ def ejer3_convolucion(a,N):
   hb = a**n
 
   # sistema en cascada
-  y1 = convolucion_lineal(x,ha)
-  y = convolucion_lineal(y1,hb)
+  y1 = convolucion_lineal(x,hb)
+  y = convolucion_lineal(y1,ha)
+
+  y2= convolucion_lineal(x,ha)
+  yw = convolucion_lineal(y2,hb)
 
   # resultados
   print(y.size)
 
   fig, ax = plt.subplots(2,constrained_layout=True)
-  ax[0].stem(y1)
-  ax[0].set_title('w[n]')
-  ax[1].stem(y)
-  ax[1].set_title('y[n]')
+  ax[0].stem(y)
+  ax[0].set_title('y_conmutada[n]')
+  ax[1].stem(yw)
+  ax[1].set_title('y_normal[n]')
   plt.show()
 
 
@@ -93,6 +96,10 @@ if __name__ == '__main__':
   # ejer1_sistemas()
   # ejer4_sistemas()
 # CONVOLUCION ----------------------------------------------------------------
+  # ejer1y2_convolucion(
+  #   np.array([1,2,2,0]),
+  #   np.array([2,1,0.5,0])
+  # )
   ejer1y2_convolucion(
     np.array([0.5,1,1,0.5,0,-0.5,-1,-1,-0.5,0]),
     np.array([1,0.75,0.5,0.25,0.25,0.1,0.1])
