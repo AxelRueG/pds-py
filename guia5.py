@@ -33,29 +33,23 @@ from zplane import zplane
   H(z) = Y(z)/X(z) = sum((2^-k)(z^-k))|k=[0,7]       # funcion de transferencia
 '''
 
-def fa(x):
-  y = np.zeros(x.shape[0])
-  for n in range(x.shape[0]):
-    y[n] = x[n]+0.5*y[n-1]-0.25*y[n-2]
-  return y
-
-def ejer_2():
-  # FUNCIONES
-  fun_a = lambda z: 1/(1-0.5*(z**-1)+0.25*(z**-2))
-  fun_b = lambda z: (z**-1)/(1-(z**-1)-(z**-2))
-  fun_c = lambda z: 7/(1-2*(z**-1)+6*(z**-2))
-  def fun_d(z):
+# funciones ejer 2 -------------------------------------------------------------
+fun_item_a = lambda z: 1/(1-0.5*(z**-1)+0.25*(z**-2))
+fun_item_b = lambda z: (z**-1)/(1-(z**-1)-(z**-2))
+fun_item_c = lambda z: 7/(1-2*(z**-1)+6*(z**-2))
+def fun_item_d(z):
     zd = np.zeros(z.shape[0])
     for k in range(8): zd = zd+((2**-k)*(z**-k))
     return zd
 
+def ejer_2(fun):
   # datos
   fm = 10000
   z = np.arange(0,1,1/fm)*(2*np.pi)
   N = z.shape[0]
 
   # calculo la  respuesta en frecuencias
-  Hk = fun_d(np.exp(1j*z))  # estamos evaluando H(z) en z=re^(jwn)
+  Hk = fun(np.exp(1j*z))  # estamos evaluando H(z) en z=re^(jwn)
   hn_calc = np.fft.ifft(Hk)
 
   ## invertimos las frecuencias negativas y calcular frecuencias
@@ -87,7 +81,7 @@ def ejer_3():
   h = respuesta_al_impulso(100,
       np.array([1,-2,2,-1]),
       np.array([1.7,-0.8,0.1]))
-      
+
   '''
   NOTA: segun el analicis de polos y ceros, podemos determinar que el sistema es estable,
   como podemos apreciar en la grafica de la respusta al impulso, que es finita.
@@ -103,6 +97,46 @@ def ejer_3():
 
   plt.show()
 
+def ejer_4():
+  fun_en_s = lambda s: (12500*s)/((44*s**2)+(60625*s)+6250000)
+
+  N = 5000
+  w = np.arange(0,N)
+  Hs = fun_en_s(1j*w)
+
+  Hs_max = max(abs(Hs))
+  id = np.nonzero(abs(Hs) == Hs_max)[0][0]
+
+  for i in range(id,Hs.shape[0]):
+    if abs(Hs[i])<(Hs_max-3): break
+  
+  f = 4*i
+  # f = 4*(i/(2*np.pi))
+  T = 1/f
+  print(f'periodo de muestre: T={T}')
+  
+  # aproximaciones
+  euler = lambda z: (1-z**(-1))/T
+  bilineal = lambda z: (2/T)*((1-z**(-1))/(1+z**(-1)))
+
+  z = np.exp(1j*np.arange(0,np.pi,T))
+
+  _,ax = plt.subplots(3,constrained_layout=True)
+  ax[0].plot(abs(Hs))
+  ax[0].set_title('aproximacion real')
+  ax[0].set_xlabel('frecuencias')
+  ax[0].set_ylabel('dB')
+  ax[1].plot(abs(fun_en_s(euler(z)))[0:N])
+  ax[1].set_title('transformacion de euler')
+  ax[1].set_xlabel('frecuencias')
+  ax[1].set_ylabel('dB')
+  ax[2].plot(abs(fun_en_s(bilineal(z)))[0:N])
+  ax[2].set_title('transformacion bilineal')
+  ax[2].set_xlabel('frecuencias')
+  ax[2].set_ylabel('dB')
+  plt.show()
+
 if __name__=='__main__':
-  # ejer_2()
-  ejer_3()
+  # ejer_2(fun_item_a)
+  # ejer_3()
+  ejer_4()
