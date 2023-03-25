@@ -40,7 +40,8 @@ def Ejer3():
     # A = 3
 
     # t0 tf fm fs phi
-    t, y = senoidal(0, 0.1, 800, 20, -2*np.pi*0.00625/0.05, 3)
+    phi = -2 * np.pi * 20 * (5 / 800)
+    t, y = senoidal(0, 0.1, 800, 20, phi, 3)
     plt.stem(t, y)
     plt.show()
     pass
@@ -99,5 +100,5 @@ if __name__ == '__main__':
     # Ejer2()
     # Ejer3()
     # Ejer4()
-    # Ejer5()
-    Ejer6()
+    Ejer5()
+    # Ejer6()

@@ -19,6 +19,7 @@ def rectificacion(y):
 def cuantizador(x0,N=8):
     H = (2*x0.max())/N;
     xmin = x0.min()
+    print(xmin)
     x = x0-xmin
     index = np.nonzero(x < (N-1)*H)
     x[index] = H*(x[index]/H).astype(int)
