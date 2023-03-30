@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 from utils.Signals import cuadrada, senoidal, sinc
-from utils.SignalsOperations import cuantizador, inversion, rectificacion
+from utils.SignalsOperations import cuantizador, inversion, rectificacion_media_onda
 from utils.interpolantes import escalon, interpolacion, lineal
 
 
@@ -19,7 +19,7 @@ def Ejer1():
 def Ejer2():
     t, y = senoidal(0, 1, 100, 2)
     t1, y1 = inversion(t, y)
-    y2 = rectificacion(y)
+    y2 = rectificacion_media_onda(y)
     y3 = cuantizador(y)
     fig, axs = plt.subplots(2, 2)
     axs[0][0].stem(t, y)
@@ -97,8 +97,8 @@ def Ejer6():
 
 if __name__ == '__main__':
     # Ejer1()
-    # Ejer2()
+    Ejer2()
     # Ejer3()
     # Ejer4()
-    Ejer5()
+    # Ejer5()
     # Ejer6()
